@@ -31,10 +31,10 @@ C(end+1,1) = {['0.0 TimGenOn - Time to turn on the generator for a startup (s) [
 C(end+1,1) = {['9999.9 TimGenOf - Time to turn off the generator (s) [used only when GenTiStp=True]	']};
 
 C(end+1,1) = {['---------------------- SIMPLE VARIABLE-SPEED TORQUE CONTROL --------------------	']};
-C(end+1,1) = {['7.559987120819503 VS_RtGnSp - Rated generator speed for simple variable-speed generator control (HSS side) (rpm) [used only when VSContrl=1]	']};
-C(end+1,1) = {['19624046.66639 VS_RtTq - Rated generator torque/constant generator torque in Region 3 for simple variable-speed generator control (HSS side) (N-m) [used only when VSContrl=1]	']};
-C(end+1,1) = {['343357.4355671095 VS_Rgn2K - Generator torque constant in Region 2 for simple variable-speed generator control (HSS side) (N-m/rpm^2) [used only when VSContrl=1]	']};
-C(end+1,1) = {['2. VS_SlPc - Rated generator slip percentage in Region 2 1/2 for simple variable-speed generator control (%) [used only when VSContrl=1]	']};
+C(end+1,1) = {['9999.9 VS_RtGnSp - Rated generator speed for simple variable-speed generator control (HSS side) (rpm) [used only when VSContrl=1]	']};
+C(end+1,1) = {['9999.9 VS_RtTq - Rated generator torque/constant generator torque in Region 3 for simple variable-speed generator control (HSS side) (N-m) [used only when VSContrl=1]	']};
+C(end+1,1) = {['9999.9 VS_Rgn2K - Generator torque constant in Region 2 for simple variable-speed generator control (HSS side) (N-m/rpm^2) [used only when VSContrl=1]	']};
+C(end+1,1) = {['9999.9 VS_SlPc - Rated generator slip percentage in Region 2 1/2 for simple variable-speed generator control (%) [used only when VSContrl=1]	']};
 
 C(end+1,1) = {['---------------------- SIMPLE INDUCTION GENERATOR ------------------------------	']};
 C(end+1,1) = {['9999.9 SIG_SlPc - Rated generator slip percentage (%) [used only when VSContrl=0 and GenModel=1]	']};
@@ -59,8 +59,8 @@ C(end+1,1) = {['9999.9 HSSBrDT - Time for HSS-brake to reach full deployment onc
 C(end+1,1) = {['9999.9 HSSBrTqF - Fully deployed HSS-brake torque (N-m)	']};
 
 C(end+1,1) = {['---------------------- NACELLE-YAW CONTROL -------------------------------------	']};
-C(end+1,1) = {['0 YCMode - Yaw control mode {0: none, 3: user-defined from routine UserYawCont, 4: user-defined from Simulink/Labview, 5: user-defined from Bladed-style DLL} (switch)	']};
-C(end+1,1) = {['9999.9 TYCOn - Time to enable active yaw control (s) [unused when YCMode=0]	']};
+C(end+1,1) = {['5 YCMode - Yaw control mode {0: none, 3: user-defined from routine UserYawCont, 4: user-defined from Simulink/Labview, 5: user-defined from Bladed-style DLL} (switch)	']};
+C(end+1,1) = {['200 TYCOn - Time to enable active yaw control (s) [unused when YCMode=0]	']};
 C(end+1,1) = {['0.0 YawNeut - Neutral yaw position--yaw spring force is zero at this yaw (degrees)	']};
 C(end+1,1) = {['6009291301.0 YawSpr - Nacelle-yaw spring constant (N-m/rad)	']};
 C(end+1,1) = {['4811254.0 YawDamp - Nacelle-yaw damping constant (N-m/(rad/s))	']};
@@ -115,7 +115,7 @@ C(end+1,1) = {['(rpm) (Nm) 	']};
 
 C(end+1,1) = {['---------------------- OUTPUT --------------------------------------------------	']};
 C(end+1,1) = {['True SumPrint - Print summary data to <RootName>.sum (flag) (currently unused)	']};
-C(end+1,1) = {['1 OutFile - Switch to determine where output will be placed: {1: in module output file only; 2: in glue code output file only; 3: both} (currently unused)	']};
+C(end+1,1) = {['2 OutFile - Switch to determine where output will be placed: {1: in module output file only; 2: in glue code output file only; 3: both} (currently unused)	']};
 C(end+1,1) = {['True TabDelim - Use tab delimiters in text tabular output file? (flag) (currently unused)	']};
 C(end+1,1) = {['"ES10.3E2" OutFmt - Format used for text tabular output (except time). Resulting field should be 10 characters. (quoted string) (currently unused)	']};
 C(end+1,1) = {['0.0 TStart - Time to begin tabular output (s) (currently unused)	']};
