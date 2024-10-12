@@ -194,7 +194,8 @@ for sitenum = 1 %loop through sites
 end
 
 cd all_bts/
-prepare_openfast_tasks_array(numCores)
+prepare_turbsim_tasks_array(numCores)
+copyfile('../submit_jobs_turbsim_array.sh', './');
 system('chmod +x *sh')
 cd ../
 
