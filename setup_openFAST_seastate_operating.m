@@ -42,6 +42,12 @@ for sitenum = 1 %loop through sites
         % set the Vhub, Hs and Tp from the seastate pairs
         Vhub = IM.windTry(pairnum);
         Hs   = IM.waveTry(pairnum);
+        
+        if Hs > 10
+            simDT = 0.001;
+        else
+            simDT = 0.01;
+        end
             
         for nseed=1:numel(seedpool)
             seed = seedpool(nseed);
