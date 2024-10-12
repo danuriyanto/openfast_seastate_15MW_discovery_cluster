@@ -5,26 +5,25 @@ addpath generate_openfast_input_seastate/
 %global setting
 simdur = 800; %simulation duration in seconds;
 rng(12345)
-numSeeds = 18;
+numSeeds = 1;
 simDT = 0.001;
 seedpool = randi([0,1000000],numSeeds,1); 
 summary_openFast = struct();
 FST_info = struct();
-fact = [1.20 1.26 1.24 1.24 1.21 1.43 1.29 1.38 1.42 1.15 1.20 1.34]; %from Mike21 vs NREL
 numCores = 12; % number of the parallel pool workers in MATLAB batches
 mkdir("all_bts")
-for sitenum = 1:12 %loop through sites
+for sitenum = 1 %loop through sites
 
     % set the folder name
     sitename = designTable.Name{sitenum};
-    foldername = ['openfast_seastate_' sitename '_18_seeds'];
+    foldername = ['openfast_seastate_' sitename '_operating'];
     mkdir(foldername)
 
-    % create the Intensity Measure (IM)
-    hzd = load(['hazard/' sitename '.mat']);
+    % create the Intensity Measure (IM) only on the operating condition
+    hzd = load(['hazard_rep/' sitename '.mat']);
+    hzd.hazard_rep = hzd.hazard_rep(hzd.hazard_rep.Vw >= 3 & hzd.hazard_rep.Vw <= 25, :);
     depth = designTable.Depth_m_(sitenum);
-    hzd.hazard.Hs(1:end-2) = hzd.hazard.Hs(1:end-2) * fact(sitenum);
-    [IM] = createIM(hzd.hazard,depth,sitenum);
+    [IM] = createIM_operating(hzd.hazard_rep,depth,sitenum);
     
     % copy the main folder to each running folder and go into site folder
     copyfile("IEA-15-240-RWT-Monopile_DISCON.IN", foldername)
@@ -137,12 +136,12 @@ for sitenum = 1:12 %loop through sites
             writeAeroDyn_seastate(AeroDyn);
 
             % setup ServoDyn input file
-            ServoDyn.DLL_FileName = '/Users/macbook/miniconda3/envs/openfast_seastate/lib/libdiscon.dylib';
+            ServoDyn.DLL_FileName = 'IEA-15-240-RWT/libdiscon.so';
             writeServoDyn_v352(ServoDyn);
 
             % setup ElastoDyn input file
             ElastoDyn.NacYaw    = 0; % nacelle yaw angle
-            ElastoDyn.BlPitch   = 90; %blade pitch, 90 deg == feathered blade
+            ElastoDyn.BlPitch   = 0; % blade pitch, 90 deg == feathered blade
             ElastoDyn.RotSpeed  = 0; % initial rotor speed
             ElastoDyn.Azimuth   = 60;
             ElastoDyn.GenDOF    = 'True'; % True = idling, False = fixed
@@ -169,7 +168,7 @@ for sitenum = 1:12 %loop through sites
             fst.CompElast   = 1; % {1=ElastoDyn; 2=ElastoDyn + BeamDyn for blades}
             fst.CompInflow  = 1; % {0=still air; 1=InflowWind; 2=external from OpenFOAM}
             fst.CompAero    = 2; % {0=None; 1=AeroDyn v14; 2=AeroDyn v15}
-            fst.CompServo   = 0; % {0=None; 1=ServoDyn}
+            fst.CompServo   = 1; % {0=None; 1=ServoDyn}
             fst.CompHydro   = 1; % {0=None; 1=HydroDyn}
             fst.CompSub     = 1; % {0=None; 1=SubDyn; 2=External Platform MCKF}
             fst.CompSeaSt   = 1; % {0=None; 1=SeaState}
@@ -185,26 +184,10 @@ for sitenum = 1:12 %loop through sites
             fst.FolderName  = foldername;
             writeFST_seastate(fst);
 
-
-%             % save all the fst properties in the summary struct
-%             summary_openFast(runIndex).sitename   = site_name;
-%             summary_openFast(runIndex).Hs         = Hs;
-%             summary_openFast(runIndex).Vhub       = Vhub;
-%             summary_openFast(runIndex).seed       = seed;
-%             summary_openFast(runIndex).SubDyn     = SubDyn;
-%             summary_openFast(runIndex).HydroDyn   = HydroDyn;
-%             summary_openFast(runIndex).AeroDyn    = AeroDyn;
-%             summary_openFast(runIndex).ServoDyn   = ServoDyn;
-%             summary_openFast(runIndex).ElastoDyn  = ElastoDyn;
-%             summary_openFast(runIndex).InflowWind = InflowWind;
-%             summary_openFast(runIndex).TurbSim    = TurbSim;
-%             summary_openFast(runIndex).fst        = fst;
         end
     end
     prepare_openfast_tasks_array(numCores)
-    prepare_turbsim_tasks_array(numCores)
     copyfile('../submit_jobs_openfast_array.sh', './');
-    copyfile('../submit_jobs_turbsim_array.sh', './');
     system('chmod +x *sh')
     movefile("*.Turbsim.Inp", "../all_bts/")
     cd ../
@@ -212,6 +195,7 @@ end
 
 cd all_bts/
 prepare_openfast_tasks_array(numCores)
+system('chmod +x *sh')
 cd ../
 
 fprintf('FINISH!!!!')
