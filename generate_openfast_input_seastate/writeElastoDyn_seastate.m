@@ -106,7 +106,7 @@ C(end+1,1) = {['False         Furling       - Read in additional model propertie
 C(end+1,1) = {['unused      FurlFile      - Name of file containing furling properties (quoted string) [unused when Furling=False]']};
 C(end+1,1) = {['---------------------- TOWER ---------------------------------------------------']};
 C(end+1,1) = {['20            TwrNodes      - Number of tower nodes used for analysis (-)']};
-C(end+1,1) = {['"../../IEA-15-240-RWT/IEA-15-240-RWT-Monopile_ElastoDyn_tower.dat" TwrFile       - Name of file containing tower properties (quoted string)']};
+C(end+1,1) = {['"IEA-15-240-RWT/IEA-15-240-RWT-Monopile_ElastoDyn_tower.dat" TwrFile       - Name of file containing tower properties (quoted string)']};
 C(end+1,1) = {['---------------------- OUTPUT --------------------------------------------------']};
 C(end+1,1) = {['False         SumPrint      - Print summary data to "<RootName>.sum" (flag)']};
 C(end+1,1) = {['2             OutFile       - Switch to determine where output will be placed: {1: in module output file only; 2: in glue code output file only; 3: both} (currently unused)']};
