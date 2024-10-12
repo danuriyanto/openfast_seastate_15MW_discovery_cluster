@@ -188,5 +188,4 @@ for sitenum = [2] %:height(designTable) %loop through sites
         close all
         %%
     end
-
 end
