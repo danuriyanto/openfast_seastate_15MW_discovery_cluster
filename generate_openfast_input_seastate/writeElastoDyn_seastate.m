@@ -84,9 +84,9 @@ C(end+1,1) = {['0.0           PtfmPIner     - Platform inertia for pitch tilt ro
 C(end+1,1) = {['100000000.0   PtfmYIner     - Platform inertia for yaw rotation about the platform CM (kg m^2)']};
 C(end+1,1) = {['---------------------- BLADE ---------------------------------------------------']};
 C(end+1,1) = {['50            BldNodes      - Number of blade nodes (per blade) used for analysis (-)']};
-C(end+1,1) = {['"../../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile1      - Name of file containing properties for blade 1 (quoted string)']};
-C(end+1,1) = {['"../../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile2      - Name of file containing properties for blade 2 (quoted string)']};
-C(end+1,1) = {['"../../IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile3      - Name of file containing properties for blade 3 (quoted string) [unused for 2 blades]']};
+C(end+1,1) = {['"IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile1      - Name of file containing properties for blade 1 (quoted string)']};
+C(end+1,1) = {['"IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile2      - Name of file containing properties for blade 2 (quoted string)']};
+C(end+1,1) = {['"IEA-15-240-RWT/IEA-15-240-RWT_ElastoDyn_blade.dat" BldFile3      - Name of file containing properties for blade 3 (quoted string) [unused for 2 blades]']};
 C(end+1,1) = {['---------------------- ROTOR-TEETER --------------------------------------------']};
 C(end+1,1) = {['0             TeetMod       - Rotor-teeter spring/damper model {0: none, 1: standard, 2: user-defined from routine UserTeet} (switch) [unused for 3 blades]']};
 C(end+1,1) = {['0.0           TeetDmpP      - Rotor-teeter damper position (degrees) [used only for 2 blades and when TeetMod=1]']};
