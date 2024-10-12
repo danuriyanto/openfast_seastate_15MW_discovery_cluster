@@ -42,7 +42,7 @@ for sitenum = 1 %loop through sites
         % set the Vhub, Hs and Tp from the seastate pairs
         Vhub = IM.windTry(pairnum);
         Hs   = IM.waveTry(pairnum);
-        
+        [bladepitch,gentorque,rotspeed] = controller_trajectory(Vhub);
         if Hs > 10
             simDT = 0.001;
         else
@@ -147,8 +147,8 @@ for sitenum = 1 %loop through sites
 
             % setup ElastoDyn input file
             ElastoDyn.NacYaw    = 0; % nacelle yaw angle
-            ElastoDyn.BlPitch   = 0; % blade pitch, 90 deg == feathered blade
-            ElastoDyn.RotSpeed  = 0; % initial rotor speed
+            ElastoDyn.BlPitch   = bladepitch; % blade pitch, 90 deg == feathered blade
+            ElastoDyn.RotSpeed  = rotspeed; % initial rotor speed
             ElastoDyn.Azimuth   = 60;
             ElastoDyn.GenDOF    = 'True'; % True = idling, False = fixed
             writeElastoDyn_seastate(ElastoDyn);
