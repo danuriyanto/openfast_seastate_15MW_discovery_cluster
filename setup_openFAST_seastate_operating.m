@@ -199,4 +199,4 @@ copyfile('../submit_jobs_turbsim_array.sh', './');
 system('chmod +x *sh')
 cd ../
 
-fprintf('FINISH!!!!')
+sprintf('FINISH!!!!')
