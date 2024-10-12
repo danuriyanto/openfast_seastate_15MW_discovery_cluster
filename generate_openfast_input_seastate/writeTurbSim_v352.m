@@ -27,7 +27,7 @@ C(end+1,1) = {[num2str(TurbSim.AnalysisTime),'          AnalysisTime  - Length o
 C(end+1,1) = {'"ALL"         UsableTime    - Usable length of output time series [seconds] (program will add GridWidth/MeanHHWS seconds unless UsableTime is "ALL")'};
 C(end+1,1) = {'150           HubHt         - Hub height [m] (should be > 0.5*GridHeight)'};
 C(end+1,1) = {'289.5         GridHeight    - Grid height [m]'};
-C(end+1,1) = {'280.0         GridWidth     - Grid width [m] (should be >= 2*(RotorRadius+ShaftLength))'};
+C(end+1,1) = {'350.0         GridWidth     - Grid width [m] (should be >= 2*(RotorRadius+ShaftLength))'};
 C(end+1,1) = {'0             VFlowAng      - Vertical mean flow (uptilt) angle [degrees]'};
 C(end+1,1) = {'0             HFlowAng      - Horizontal mean flow (skew) angle [degrees]'};
 C(end+1,1) = {''};
