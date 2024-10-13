@@ -63,10 +63,17 @@ C(end+1,1) = {['-------------------------- CABLE PROPERTIES --------------------
 C(end+1,1) = {['0 NCablePropSets - Number of cable cable properties	']};
 C(end+1,1) = {['PropSetID EA MatDens T0	']};
 C(end+1,1) = {['(-) (N) (kg/m) (N)	']};
+
 C(end+1,1) = {['----------------------- RIGID LINK PROPERTIES ------------------------------------	']};
 C(end+1,1) = {['0 NRigidPropSets - Number of rigid link properties	']};
 C(end+1,1) = {['PropSetID MatDens	']};
 C(end+1,1) = {['(-) (kg/m)	']};
+
+C(end+1,1) = {['---------------------- MEMBER COSINE MATRICES COSM(i,j) ------------------------	']};
+C(end+1,1) = {['0 NCOSMs - Number of unique cosine matrices (i.e., of unique member alignments including principal axis rotations); ignored if NXPropSets=0 or 9999 in any element below	']};
+C(end+1,1) = {['COSMID COSM11 COSM12 COSM13 COSM21 COSM22 COSM23 COSM31 COSM32 COSM33	']};
+C(end+1,1) = {['(-) (-) (-) (-) (-) (-) (-) (-) (-) (-)	']};
+
 C(end+1,1) = {['---------------------- MEMBER COSINE MATRICES COSM(i,j) ------------------------	']};
 C(end+1,1) = {['0 NCOSMs - Number of unique cosine matrices (i.e., of unique member alignments including principal axis rotations); ignored if NXPropSets=0 or 9999 in any element below	']};
 C(end+1,1) = {['COSMID COSM11 COSM12 COSM13 COSM21 COSM22 COSM23 COSM31 COSM32 COSM33	']};
