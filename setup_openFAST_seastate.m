@@ -140,7 +140,7 @@ for sitenum = 1 %loop through sites
 
             % setup ElastoDyn input file
             ElastoDyn.NacYaw    = 0; % nacelle yaw angle
-            ElastoDyn.BlPitch   = 0; %blade pitch, 90 deg == feathered blade
+            ElastoDyn.BlPitch   = 90; %blade pitch, 90 deg == feathered blade
             ElastoDyn.RotSpeed  = 0; % initial rotor speed
             ElastoDyn.Azimuth   = 60;
             ElastoDyn.GenDOF    = 'True'; % True = idling, False = fixed
