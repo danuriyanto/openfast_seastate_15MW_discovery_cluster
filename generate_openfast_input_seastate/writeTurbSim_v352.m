@@ -22,7 +22,7 @@ C(end+1,1) = {''};
 C(end+1,1) = {'--------Turbine/Model Specifications-----------------------'};
 C(end+1,1) = {'15            NumGrid_Z     - Vertical grid-point matrix dimension'};
 C(end+1,1) = {'15            NumGrid_Y     - Horizontal grid-point matrix dimension'};
-C(end+1,1) = {'0.001         TimeStep      - Time step [seconds]'};
+C(end+1,1) = {'0.01         TimeStep      - Time step [seconds]'};
 C(end+1,1) = {[num2str(TurbSim.AnalysisTime),'          AnalysisTime  - Length of analysis time series [seconds] (program will add time if necessary: AnalysisTime = MAX(AnalysisTime, UsableTime+GridWidth/MeanHHWS) )']};
 C(end+1,1) = {'"ALL"         UsableTime    - Usable length of output time series [seconds] (program will add GridWidth/MeanHHWS seconds unless UsableTime is "ALL")'};
 C(end+1,1) = {'150           HubHt         - Hub height [m] (should be > 0.5*GridHeight)'};
