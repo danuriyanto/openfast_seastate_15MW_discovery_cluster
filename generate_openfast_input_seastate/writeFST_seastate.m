@@ -8,7 +8,7 @@ C(end+1,1) = {['FATAL                AbortLevel  - Error level when simulation s
 C(end+1,1) = {[num2str(fst.Tmax) '	               TMax        - Total run time (s)	']};
 C(end+1,1) = {[num2str(fst.DT) '	               DT          - Recommended module time step (s)	']};
 C(end+1,1) = {['2                      InterpOrder - Interpolation order for input/output time history (-) {1=linear, 2=quadratic}	']};
-C(end+1,1) = {['1                      NumCrctn    - Number of correction iterations (-) {0=explicit calculation, i.e., no corrections}	']};
+C(end+1,1) = {['4                      NumCrctn    - Number of correction iterations (-) {0=explicit calculation, i.e., no corrections}	']};
 C(end+1,1) = {['99999.0                DT_UJac     - Time between calls to get Jacobians (s)	']};
 C(end+1,1) = {['1000000.0              UJacSclFact - Scaling factor used in Jacobians (-)	']};
 C(end+1,1) = {['---------------------- FEATURE SWITCHES AND FLAGS ------------------------------	']};
