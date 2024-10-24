@@ -45,7 +45,10 @@ function prepare_openfast_tasks_array(numCores)
     fprintf(fid, 'fstFiles = textscan(fileID, ''%%s''); fclose(fileID); ');
     fprintf(fid, 'parpool(%d); ', numCores);
     fprintf(fid, 'parfor i = $startIdx:$endIdx, ');
-    fprintf(fid, 'system(sprintf(''openfast %%s'', fstFiles{1}{i})); end; exit;"\n');
     
+    % Updated to redirect the output to a file named based on the .fst file
+    fprintf(fid, 'outputFile = sprintf(''%%s.out'', fstFiles{1}{i}(1:end-4)); ');
+    fprintf(fid, 'system(sprintf(''openfast %%s > %%s'', fstFiles{1}{i}, outputFile)); end; exit;"\n');
+
     fclose(fid);
 end
