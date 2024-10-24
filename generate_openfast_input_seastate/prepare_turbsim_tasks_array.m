@@ -45,7 +45,10 @@ function prepare_turbsim_tasks_array(numCores)
     fprintf(fid, 'turbsimFiles = textscan(fileID, ''%%s''); fclose(fileID); ');
     fprintf(fid, 'parpool(%d); ', numCores);
     fprintf(fid, 'parfor i = $startIdx:$endIdx, ');
-    fprintf(fid, 'system(sprintf(''turbsim %%s'', turbsimFiles{1}{i})); end; exit;"\n');
+    
+    % Updated to redirect the output to a file named based on the .Inp file
+    fprintf(fid, 'outputFile = sprintf(''%%s.out'', turbsimFiles{1}{i}(1:end-12)); ');
+    fprintf(fid, 'system(sprintf(''turbsim %%s > %%s'', turbsimFiles{1}{i}, outputFile)); end; exit;"\n');
     
     fclose(fid);
 end
