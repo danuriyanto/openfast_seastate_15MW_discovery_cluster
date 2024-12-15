@@ -3,7 +3,7 @@ load("designTable.mat")
 addpath generate_openfast_input_seastate/
 
 %global setting
-simdur = 60; %simulation duration in seconds;
+simdur = 800; %simulation duration in seconds;
 rng(12345)
 numSeeds = 18;
 simDT = 0.005;
@@ -132,7 +132,7 @@ for sitenum = 6 %loop through sites
             SeaState.MCFD               = diameter_interface;
             SeaState.ConstWaveMod       = 2;
             SeaState.CrestHmax          = 1.86*Hs;
-            SeaState.CrestTime          = 30; 
+            SeaState.CrestTime          = 379; 
             writeSeaState_seastate(SeaState);
 
             % setup AeroDyn input file

@@ -5,7 +5,7 @@ dt = 0.01;
 dur = 60;
 starttime = 0;
 
-for sitenum = [1] %:height(designTable) %loop through sites
+for sitenum = [6] %:height(designTable) %loop through sites
     clearvars -except designTable sitenum dt dur starttime
     % set the folder name
     sitename = designTable.Name{sitenum};
