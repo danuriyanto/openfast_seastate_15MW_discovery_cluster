@@ -9,7 +9,7 @@ C(end+1,1) = {['True SttcSolve - Solve dynamics about static equilibrium point	'
 C(end+1,1) = {['False GuyanLoadCorrection - Include extra moment from lever arm at interface and rotate FEM for floating.	']};
 C(end+1,1) = {['-------------------- FEA and CRAIG-BAMPTON PARAMETERS---------------------------	']};
 C(end+1,1) = {['3 FEMMod - FEM switch: element model in the FEM. [1= Euler-Bernoulli(E-B); 2=Tapered E-B (unavailable); 3= 2-node Timoshenko; 4= 2-node tapered Timoshenko (unavailable)]	']};
-C(end+1,1) = {['1 NDiv - Number of sub-elements per member	']};
+C(end+1,1) = {['15 NDiv - Number of sub-elements per member	']};
 C(end+1,1) = {['True CBMod - [T/F] If True perform C-B reduction, else full FEM dofs will be retained. If True, select Nmodes to retain in C-B reduced system.	']};
 C(end+1,1) = {['0 Nmodes - Number of internal modes to retain (ignored if CBMod=False). If Nmodes=0 --> Guyan Reduction.	']};
 C(end+1,1) = {['1 JDampings - Damping Ratios for each retained mode (% of critical) If Nmodes>0, list Nmodes structural damping ratios for each retained mode (% of critical), or a single damping ratio to be applied to all retained modes. (last entered value will be used for all remaining modes).	']};
@@ -33,7 +33,7 @@ C(end+1,1) = {['------------------- BASE REACTION JOINTS: 1/0 for Locked/Free DO
 C(end+1,1) = {['1 NReact - Number of Joints with reaction forces; be sure to remove all rigid motion DOFs of the structure (else det([K])=[0])	']};
 C(end+1,1) = {['RJointID RctTDXss RctTDYss RctTDZss RctRDXss RctRDYss RctRDZss SSIfile [Global Coordinate System]	']};
 C(end+1,1) = {['(-) (flag) (flag) (flag) (flag) (flag) (flag) (string)	']};
-C(end+1,1) = {['1 1 1 1 1 1 1 ' SubDyn.SSI_File]};
+C(end+1,1) = {['1 0 0 1 0 0 1 ' '"' SubDyn.SSI_File '"']};
 
 C(end+1,1) = {['------- INTERFACE JOINTS: 1/0 for Locked (to the TP)/Free DOF @each Interface Joint (only Locked-to-TP implemented thus far (=rigid TP)) ---------	']};
 C(end+1,1) = {['1 NInterf - Number of interface joints locked to the Transition Piece (TP): be sure to remove all rigid motion dofs	']};
@@ -51,8 +51,8 @@ C(end+1,1) = {['------------------ MEMBER X-SECTION PROPERTY data 1/2 [isotropic
 C(end+1,1) = {['2 NPropSets - Number of structurally unique x-sections (i.e. how many groups of X-sectional properties are utilized throughout all of the members)	']};
 C(end+1,1) = {['PropSetID YoungE ShearG MatDens XsecD XsecT	']};
 C(end+1,1) = {['(-) (N/m2) (N/m2) (kg/m3) (m) (m)	']};
-C(end+1,1) = {['1 210000000000 80770000000 7850 ' num2str(SubDyn.Diameter_Mudline,1) ' ' num2str(SubDyn.Thickness_Mudline,4) ' - member diameter at mudline	']};
-C(end+1,1) = {['2 210000000000 80770000000 7850 ' num2str(SubDyn.Diameter_Interface,1) ' ' num2str(SubDyn.Thickness_Interface,4) '  - member diameter at interface	']};
+C(end+1,1) = {['1 210000000000 80770000000 7850 ' num2str(SubDyn.Diameter_Mudline) ' ' num2str(SubDyn.Thickness_Mudline,4) ' - member diameter at mudline	']};
+C(end+1,1) = {['2 210000000000 80770000000 7850 ' num2str(SubDyn.Diameter_Interface) ' ' num2str(SubDyn.Thickness_Interface,4) '  - member diameter at interface	']};
 
 C(end+1,1) = {['------------------ MEMBER X-SECTION PROPERTY data 2/2 [isotropic material for now: use this table if any section other than circular, however provide COSM(i,j) below] ------------------------	']};
 C(end+1,1) = {['0 NXPropSets - Number of structurally unique non-circular x-sections (if 0 the following table is ignored)	']};

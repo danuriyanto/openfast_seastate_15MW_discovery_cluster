@@ -23,7 +23,7 @@ delete(gcp('nocreate'));
 function runTurbSim(inputFile)
 [~, fileName, ~] = fileparts(inputFile);
 % Construct the command to activate conda environment and run TurbSim
-command = sprintf('source ~/.bash_profile && conda activate openfast_stable && turbsim "%s" > %s_output.txt 2>&1', inputFile, fileName);
+command = sprintf('source ~/.bash_profile && conda activate openfast_dev && turbsim "%s" > %s_output.txt 2>&1', inputFile, fileName);
 % Run the command in the system shell
 system(command, '-echo');
 end

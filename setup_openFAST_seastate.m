@@ -3,16 +3,16 @@ load("designTable.mat")
 addpath generate_openfast_input_seastate/
 
 %global setting
-simdur = 800; %simulation duration in seconds;
+simdur = 60; %simulation duration in seconds;
 rng(12345)
-numSeeds = 1;
-simDT = 0.001;
+numSeeds = 18;
+simDT = 0.005;
 seedpool = randi([0,1000000],numSeeds,1); 
 summary_openFast = struct();
 FST_info = struct();
 numCores = 12; % number of the parallel pool workers in MATLAB batches
 mkdir("all_bts")
-for sitenum = 1 %loop through sites
+for sitenum = 6 %loop through sites
 
     % set the folder name
     sitename = designTable.Name{sitenum};
@@ -23,7 +23,11 @@ for sitenum = 1 %loop through sites
     hzd = load(['hazard_rep/' sitename '.mat']);
     depth = designTable.Depth_m_(sitenum);
     [IM] = createIM(hzd.hazard_rep,depth,sitenum);
-    
+    % findHs = find(IM.waveTry < 5);
+    % IM.waveTry(findHs) = [];
+    % IM.windTry(findHs) = [];
+
+
     % copy the main folder to each running folder and go into site folder
     copyfile("IEA-15-240-RWT-Monopile_DISCON.IN", foldername)
     copyfile("IEA-15-240-RWT", [foldername '/IEA-15-240-RWT']);
@@ -36,6 +40,8 @@ for sitenum = 1 %loop through sites
     if ~isempty(extensions)
         delete(extensions.name);
     end
+    
+
     % generate the openfast simulation input for the specific site
     for pairnum=1:numel(IM.waveTry)
         % set the Vhub, Hs and Tp from the seastate pairs
@@ -120,18 +126,19 @@ for sitenum = 1 %loop through sites
             SeaState.WaveTp             = Tp;
             SeaState.WaveDir            = wavedir;
             SeaState.WaveSeed           = seed;
-            SeaState.CurrMod            = 0;
-            SeaState.CurrSSV0           = 0;
+            SeaState.CurrMod            = 1;
+            SeaState.CurrSSV0           = 0.5;
             SeaState.CurrSSDir          = 0; 
-            SeaState.MCFD               = diameter_mudline;
+            SeaState.MCFD               = diameter_interface;
             SeaState.ConstWaveMod       = 2;
             SeaState.CrestHmax          = 1.86*Hs;
-            SeaState.CrestTime          = 350; 
+            SeaState.CrestTime          = 30; 
             writeSeaState_seastate(SeaState);
 
             % setup AeroDyn input file
             AeroDyn.WakeMod   = 0;
             AeroDyn.AFAeroMod = 1;
+            AeroDyn.InterfaceElevation = designTable.InterfaceElevation(sitenum);
             writeAeroDyn_seastate(AeroDyn);
 
             % setup ServoDyn input file
@@ -142,8 +149,9 @@ for sitenum = 1 %loop through sites
             ElastoDyn.NacYaw    = 0; % nacelle yaw angle
             ElastoDyn.BlPitch   = 90; %blade pitch, 90 deg == feathered blade
             ElastoDyn.RotSpeed  = 0; % initial rotor speed
-            ElastoDyn.Azimuth   = 60;
+            ElastoDyn.Azimuth   = 0;
             ElastoDyn.GenDOF    = 'True'; % True = idling, False = fixed
+            ElastoDyn.InterfaceElevation = designTable.InterfaceElevation(sitenum); 
             writeElastoDyn_seastate(ElastoDyn);
 
             % setup Turbsim simulation
@@ -182,7 +190,22 @@ for sitenum = 1 %loop through sites
             fst.SeaStFile   = SeaState.FileName; %seastate input file
             fst.FolderName  = foldername;
             writeFST_seastate(fst);
-
+            % 
+            % FST_info(runIndex).sitename = sitename;
+            % FST_info(runIndex).Hs = Hs;
+            % FST_info(runIndex).Tp = Tp;
+            % FST_info(runIndex).Vhub = Vhub;
+            % FST_info(runIndex).seed = seed;
+            % FST_info(runIndex).simDT = simDT;
+            % FST_info(runIndex).simduration = simdur;
+            % FST_info(runIndex).AeroDyn = AeroDyn;
+            % FST_info(runIndex).ElastoDyn = ElastoDyn;
+            % FST_info(runIndex).HydroDyn = HydroDyn;
+            % FST_info(runIndex).InflowWind = InflowWind;
+            % FST_info(runIndex).SeaState = SeaState;
+            % FST_info(runIndex).ServoDyn = ServoDyn;
+            % FST_info(runIndex).SubDyn = SubDyn;
+            % FST_info(runIndex).TurbSim = TurbSim;
         end
     end
     prepare_openfast_tasks_array(numCores)
@@ -190,6 +213,7 @@ for sitenum = 1 %loop through sites
     system('chmod +x *sh')
     movefile("*.Turbsim.Inp", "../all_bts/")
     cd ../
+    save(sprintf('FST_info_%s.mat',sitename),"FST_info")
 end
 
 cd all_bts/
