@@ -41,7 +41,7 @@ False WvSumQTF - Full summation-frequency 2nd-order wave kinematics (flag)
 ---------------------- CONSTRAINED WAVE ------------------------------------------------- [unused with WaveMod=6]	
 2 ConstWaveMod - Constrained wave model switch {0=none, 1=specified crest elevation, 2=guaranteed peak-to-trough crest height}	
 20.46 CrestHmax - Crest height or elevation	
-30 CrestTime - Time of the crest	
+37 CrestTime - Time of the crest	
 0 CrestXi - X-position of the crest	
 0 CrestYi - Y-position of the crest	
 ---------------------- CURRENT ------------------------------------------------- [unused with WaveMod=6]	
