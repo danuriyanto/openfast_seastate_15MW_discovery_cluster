@@ -49,8 +49,8 @@ export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 To make this change persistent for the openfast-dev environment, create an activation script:
 ```bash
 mkdir -p $CONDA_PREFIX/etc/conda/activate.d
-```
 echo 'export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+```
 
 ### Step 6: Verify the Installation
 Check if the `openfast` binary is accessible and working by running:
