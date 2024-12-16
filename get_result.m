@@ -2,10 +2,10 @@ clc; clear; close all;
 load("designTable.mat")
 addpath generate_openfast_input_seastate/
 dt = 0.01;
-dur = 60;
-starttime = 0;
+dur = 800;
+starttime = 200;
 
-for sitenum = [6] %:height(designTable) %loop through sites
+for sitenum = [6 9] %:height(designTable) %loop through sites
     clearvars -except designTable sitenum dt dur starttime
     % set the folder name
     sitename = designTable.Name{sitenum};
@@ -27,7 +27,7 @@ for sitenum = [6] %:height(designTable) %loop through sites
     % Initialize an array to store failed simulations' filenames
     failed_simulations_temp = cell(numFiles, 1);
 
-    for n = 1:numel(dir_outb)
+    parfor n = 1:numel(dir_outb)
         n
         FileName = [dir_outb(n).folder '/' dir_outb(n).name];
         [Channels, ChanName, ChanUnit, FileID, DescStr] = ReadFASTbinary(FileName);
@@ -46,7 +46,7 @@ for sitenum = [6] %:height(designTable) %loop through sites
 
         % base moment
         T = Channels(t_start:end,1);
-        if numel(T)~=(dur/dt + 1)
+        if numel(T)~=((dur-starttime)/dt + 1)
             compltin = 0;
         else
             compltin = 1;
@@ -254,43 +254,43 @@ for sitenum = [6] %:height(designTable) %loop through sites
     
     %% Extract unique values and their counts
     if ~isempty(res)
-    f = figure;
-    scatter(hazard_rep.Hs, hazard_rep.Vw, 'filled',SizeData=5,MarkerEdgeColor="none",MarkerFaceColor=[0.5 0.5 0.5],MarkerFaceAlpha=0.7)
-    hold on
-    scatter(res,"mean_Hs","mean_Vhub","filled",ColorVariable="mean_Moment_max")
-    hold on
-    text(res.mean_Hs+0.1,res.mean_Vhub+1, ...
-        string(round(res.mean_Moment_max,0)), ...
-        FontSize=6.0)
-    c = colorbar;
-    c.Label.String = 'mean of max moment (MN.m)';
-    clim([0 ceil(max(res.mean_Moment_max)/100) * 100])
-    sn = split(sitename,"_");
-    title([sn{1} ' ' sn{2} ' mean of max resultant moment'])
-    xlabel('Hs (m)')
-    ylabel('Vhub (m/s)')
-    xlim([0 max(Hs+2)])
-    xticks(0.5:1.5:ceil(max(Hs))+2)
-    yticks(1:8:max(Vhub)+2)
-    grid on
-    box on    
-    save(['outb_result_' sitename],"outb_result","res","failed_simulations","-v7.3")
-    exportgraphics(f,['moment_result_' sitename '.png'],Resolution=600)
-
-    figcompletion = figure;
-    scatter(res,"mean_Hs","mean_Vhub","filled",ColorVariable="GroupCount")
-    xlabel('Hs (m)')
-    ylabel('Vhub (m/s)')
-    xlim([0 max(Hs+2)])
-    xticks(0.5:1.5:ceil(max(Hs))+2)
-    yticks(1:8:max(Vhub)+2)
-    grid on
-    box on    
-    c = colorbar;
-    clim([0 18])
-    c.Ticks = 0:1:18;
-    exportgraphics(figcompletion,sprintf('completion_rate_%s.png',sitename),Resolution=150)
+        f = figure;
+        scatter(hazard_rep.Hs, hazard_rep.Vw, 'filled',SizeData=5,MarkerEdgeColor="none",MarkerFaceColor=[0.5 0.5 0.5],MarkerFaceAlpha=0.7)
+        hold on
+        scatter(res,"mean_Hs","mean_Vhub","filled",ColorVariable="mean_Moment_max")
+        hold on
+        text(res.mean_Hs+0.1,res.mean_Vhub+1, ...
+            string(round(res.mean_Moment_max,0)), ...
+            FontSize=6.0)
+        c = colorbar;
+        c.Label.String = 'mean of max moment (MN.m)';
+        clim([0 ceil(max(res.mean_Moment_max)/100) * 100])
+        sn = split(sitename,"_");
+        title([sn{1} ' ' sn{2} ' mean of max resultant moment'])
+        xlabel('Hs (m)')
+        ylabel('Vhub (m/s)')
+        xlim([0 max(Hs+2)])
+        xticks(0.5:1.5:ceil(max(Hs))+2)
+        yticks(1:8:max(Vhub)+2)
+        grid on
+        box on    
+        save(['outb_result_' sitename],"outb_result","res","failed_simulations","-v7.3")
+        exportgraphics(f,['moment_result_' sitename '.png'],Resolution=600)
+    
+        figcompletion = figure;
+        scatter(res,"mean_Hs","mean_Vhub","filled",ColorVariable="GroupCount")
+        xlabel('Hs (m)')
+        ylabel('Vhub (m/s)')
+        xlim([0 max(Hs+2)])
+        xticks(0.5:1.5:ceil(max(Hs))+2)
+        yticks(1:8:max(Vhub)+2)
+        grid on
+        box on    
+        c = colorbar;
+        clim([0 18])
+        c.Ticks = 0:1:18;
+        exportgraphics(figcompletion,sprintf('completion_rate_%s.png',sitename),Resolution=150)
     else
-        fprintf('\n\n no completed sims!')
+        fprintf('\n\n no completed sims at %s!',sitename)
     end
 end
