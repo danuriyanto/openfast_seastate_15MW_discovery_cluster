@@ -3,7 +3,7 @@ load("designTable.mat")
 addpath generate_openfast_input_seastate/
 
 %global setting
-simdur = 60; %simulation duration in seconds;
+simdur = 800; %simulation duration in seconds;
 rng(12345)
 numSeeds = 18;
 simDT = 0.005;
@@ -12,7 +12,7 @@ summary_openFast = struct();
 FST_info = struct();
 numCores = 12; % number of the parallel pool workers in MATLAB batches
 mkdir("all_bts")
-for sitenum = 6 %loop through sites
+for sitenum = 1 %loop through sites
 
     % set the folder name
     sitename = designTable.Name{sitenum};
@@ -43,7 +43,7 @@ for sitenum = 6 %loop through sites
     
 
     % generate the openfast simulation input for the specific site
-    for pairnum=1:numel(IM.waveTry)
+    parfor pairnum=1:numel(IM.waveTry)
         % set the Vhub, Hs and Tp from the seastate pairs
         Vhub = IM.windTry(pairnum);
         Hs   = IM.waveTry(pairnum);
@@ -132,7 +132,7 @@ for sitenum = 6 %loop through sites
             SeaState.MCFD               = diameter_interface;
             SeaState.ConstWaveMod       = 2;
             SeaState.CrestHmax          = 1.86*Hs;
-            SeaState.CrestTime          = 37; 
+            SeaState.CrestTime          = 379; 
             writeSeaState_seastate(SeaState);
 
             % setup AeroDyn input file
