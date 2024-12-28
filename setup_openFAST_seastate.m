@@ -6,13 +6,13 @@ addpath generate_openfast_input_seastate/
 simdur = 800; %simulation duration in seconds;
 rng(12345)
 numSeeds = 18;
-simDT = 0.005;
+simDT = 0.0025;
 seedpool = randi([0,1000000],numSeeds,1); 
 summary_openFast = struct();
 FST_info = struct();
-numCores = 12; % number of the parallel pool workers in MATLAB batches
+numCores = 24; % number of the parallel pool workers in MATLAB batches
 mkdir("all_bts")
-for sitenum = 1 %loop through sites
+for sitenum = 1:12 %loop through sites
 
     % set the folder name
     sitename = designTable.Name{sitenum};
@@ -21,11 +21,9 @@ for sitenum = 1 %loop through sites
 
     % create the Intensity Measure (IM)
     hzd = load(['hazard_rep/' sitename '.mat']);
+    hzd.hazard_rep.Vw = hzd.hazard_rep.Vw*(150/10)^0.12;
     depth = designTable.Depth_m_(sitenum);
     [IM] = createIM(hzd.hazard_rep,depth,sitenum);
-    % findHs = find(IM.waveTry < 5);
-    % IM.waveTry(findHs) = [];
-    % IM.windTry(findHs) = [];
 
 
     % copy the main folder to each running folder and go into site folder
@@ -40,8 +38,23 @@ for sitenum = 1 %loop through sites
     if ~isempty(extensions)
         delete(extensions.name);
     end
+    % prepare the variables for saving
+    % cell_sitename = ;
+    % cell_Hs = ;
+    % cell_Tp = ;
+    % cell_Vhub = ;
+    % cell_seed = ;
+    % cell_simDT = ;
+    % cell_simduration = ;
+    % cell_AeroDyn = ;
+    % cell_ElastoDyn = ;
+    % cell_HydroDyn = ;
+    % cell_InflowWind = ;
+    % cell_SeaState = ;
+    % cell_ServoDyn = ;
+    % cell_SubDyn = ;
+    % cell_TurbSim = ;
     
-
     % generate the openfast simulation input for the specific site
     parfor pairnum=1:numel(IM.waveTry)
         % set the Vhub, Hs and Tp from the seastate pairs
@@ -171,7 +184,7 @@ for sitenum = 1 %loop through sites
             fst.echo        = 'True';
             fst.env_info    = env_info;
             fst.Tmax        = simdur; %simulation duration
-            fst.DT          = simDT; %simulation DT
+            fst.DT          = simDT;  %simulation DT
             fst.CompElast   = 1; % {1=ElastoDyn; 2=ElastoDyn + BeamDyn for blades}
             fst.CompInflow  = 1; % {0=still air; 1=InflowWind; 2=external from OpenFOAM}
             fst.CompAero    = 2; % {0=None; 1=AeroDyn v14; 2=AeroDyn v15}
@@ -190,7 +203,9 @@ for sitenum = 1 %loop through sites
             fst.SeaStFile   = SeaState.FileName; %seastate input file
             fst.FolderName  = foldername;
             writeFST_seastate(fst);
-            % 
+            
+            % save into struct, still needs a way to efficiently save that
+            % within parfor, skipped for now. 
             % FST_info(runIndex).sitename = sitename;
             % FST_info(runIndex).Hs = Hs;
             % FST_info(runIndex).Tp = Tp;
