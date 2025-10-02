@@ -124,6 +124,7 @@ Turbsim_Vhub_57_seednum_872176.Turbsim.Inp
 Turbsim_Vhub_57_seednum_929617.Turbsim.Inp
 Turbsim_Vhub_57_seednum_961307.Turbsim.Inp
 Turbsim_Vhub_57_seednum_964515.Turbsim.Inp
+Turbsim_Vhub_60_seednum_929617.Turbsim.Inp
 Turbsim_Vhub_65_seednum_106444.Turbsim.Inp
 Turbsim_Vhub_65_seednum_183918.Turbsim.Inp
 Turbsim_Vhub_65_seednum_204560.Turbsim.Inp

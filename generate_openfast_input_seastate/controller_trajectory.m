@@ -6,4 +6,7 @@ rotspeed_pred = readmatrix("../iea15mw-controller_regulation_trajectory/rotor_sp
 bladepitch = interp1(bladepitch_pred(:,1),bladepitch_pred(:,2),windspeed,"linear");
 gentorque  = interp1(gentorque_pred(:,1),gentorque_pred(:,2),windspeed,"linear");
 rotspeed   = interp1(rotspeed_pred(:,1),rotspeed_pred(:,2),windspeed,"linear");
+if isnan(rotspeed)
+    rotspeed = 3;
+end
 end
